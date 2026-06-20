@@ -57,11 +57,51 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Получаем цель
     elif step == "goal":
-        users[user_id]["goal"] = text
+    users[user_id]["goal"] = text
+    users[user_id]["step"] = "time"
 
-        name = users[user_id]["name"]
-        age = users[user_id]["age"]
-        goal = users[user_id]["goal"]
+    await update.message.reply_text(
+        "Через сколько времени ты хочешь достичь этой цели?"
+    )
+
+elif step == "time":
+    users[user_id]["time"] = text
+    users[user_id]["step"] = "obstacle"
+
+    await update.message.reply_text(
+        "Что сейчас мешает тебе больше всего?"
+    )
+
+elif step == "obstacle":
+    users[user_id]["obstacle"] = text
+    users[user_id]["step"] = "hours"
+
+    await update.message.reply_text(
+        "Сколько часов в день ты готов уделять развитию?"
+    )
+
+elif step == "hours":
+    users[user_id]["hours"] = text
+
+    name = users[user_id]["name"]
+    age = users[user_id]["age"]
+    goal = users[user_id]["goal"]
+    time_goal = users[user_id]["time"]
+    obstacle = users[user_id]["obstacle"]
+    hours = users[user_id]["hours"]
+
+    await update.message.reply_text(
+        f"📊 Твой профиль:\n\n"
+        f"👤 Имя: {name}\n"
+        f"🎂 Возраст: {age}\n"
+        f"🎯 Цель: {goal}\n"
+        f"⏳ Срок: {time_goal}\n"
+        f"⚠️ Главное препятствие: {obstacle}\n"
+        f"🕒 Время на развитие: {hours}\n\n"
+        f"🚀 Отлично. Теперь я буду помогать тебе двигаться к цели."
+    )
+
+    users[user_id]["step"] = "done"
 
         await update.message.reply_text(
             f"Спасибо, {name}.\n\n"
