@@ -102,7 +102,25 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 app = Application.builder().token(TOKEN).build()
+async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.message.chat_id
 
+    if user_id not in users or "goal" not in users[user_id]:
+        await update.message.reply_text(
+            "Сначала пройди знакомство через /start"
+        )
+        return
+
+    goal = users[user_id]["goal"]
+
+    await update.message.reply_text(
+        f"🎯 Твоя цель: {goal}\n\n"
+        "📌 План на сегодня:\n\n"
+        "1. Сделай одно действие, которое приблизит тебя к цели.\n"
+        "2. Изучи что-то новое по своей теме.\n"
+        "3. Запиши 3 идеи для улучшения своей жизни или проекта.\n\n"
+        "🚀 Главное — не стоять на месте."
+    )
 app.add_handler(CommandHandler("start", start))
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
