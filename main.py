@@ -121,8 +121,9 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "3. Запиши 3 идеи для улучшения своей жизни или проекта.\n\n"
         "🚀 Главное — не стоять на месте."
     )
-    app.add_handler(CommandHandler("план", plan))
+
 app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("план", plan))
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
 )
