@@ -29,9 +29,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text
 
     if user_id not in users:
-        await update.message.reply_text(
-            "Напиши /start чтобы начать."
-        )
+        await update.message.reply_text("Напиши /start чтобы начать.")
         return
 
     step = users[user_id]["step"]
@@ -41,8 +39,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         users[user_id]["step"] = "age"
 
         await update.message.reply_text(
-            f"Приятно познакомиться, {text}!\n\n"
-            "Сколько тебе лет?"
+            f"Приятно познакомиться, {text}!\n\nСколько тебе лет?"
         )
 
     elif step == "age":
@@ -101,7 +98,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         users[user_id]["step"] = "done"
 
 
-app = Application.builder().token(TOKEN).build()
 async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.chat_id
 
@@ -121,6 +117,9 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "3. Запиши 3 идеи для улучшения своей жизни или проекта.\n\n"
         "🚀 Главное — не стоять на месте."
     )
+
+
+app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("план", plan))
