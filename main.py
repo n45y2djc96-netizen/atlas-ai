@@ -9,32 +9,62 @@ from telegram.ext import (
 
 TOKEN = "8747579183:AAGEdi5ramP3XZ0EEzAQVOCB4IRnqvm8ANc"
 
+# Здесь временно храним данные пользователей
+users = {}
+
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    users[user_id] = {"step": "goal"}
+
     await update.message.reply_text(
         "👋 Привет!\n\n"
         "Я ATLAS — твой AI-стратег.\n\n"
-        "Напиши мне свою главную цель."
+        "Напиши свою главную цель."
     )
 
 
 async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    if user_id not in users or "goal" not in users[user_id]:
+        await update.message.reply_text(
+            "Сначала напиши свою цель через /start"
+        )
+        return
+
+    goal = users[user_id]["goal"]
+
     await update.message.reply_text(
+        f"🎯 Твоя цель: {goal}\n\n"
         "📌 План на сегодня:\n\n"
-        "1. Изучи что-нибудь новое 30 минут.\n"
-        "2. Сделай одно действие для своей цели.\n"
-        "3. Запиши 3 новые идеи.\n\n"
-        "🚀 Двигайся вперёд каждый день."
+        "1. Сделай одно действие для достижения цели.\n"
+        "2. Изучи что-то новое 30 минут.\n"
+        "3. Запиши 3 идеи для развития.\n\n"
+        "🚀 Каждый день двигайся вперёд."
     )
 
 
 async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
     text = update.message.text
 
-    await update.message.reply_text(
-        f"Ты написал:\n\n{text}\n\n"
-        "🔥 Интересно. Расскажи подробнее."
-    )
+    if user_id in users and users[user_id]["step"] == "goal":
+        users[user_id]["goal"] = text
+        users[user_id]["step"] = "done"
+
+        await update.message.reply_text(
+            f"🔥 Отлично!\n\n"
+            f"Я сохранил твою цель:\n\n"
+            f"🎯 {text}\n\n"
+            f"Теперь используй команду /plan"
+        )
+
+    else:
+        await update.message.reply_text(
+            "Я запомнил твоё сообщение. Используй /plan для получения плана."
+        )
 
 
 app = Application.builder().token(TOKEN).build()
