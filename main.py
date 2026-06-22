@@ -57,6 +57,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         "Понял 👍\n\nТеперь напиши свою главную цель."
     )
+    
     return
 
 elif user_id in users and users[user_id]["step"] == "goal":
