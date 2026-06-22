@@ -16,7 +16,7 @@ users = {}
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
 
-    users[user_id] = {"step": "goal"}
+    users[user_id] = {"step": "level"}
 
     await update.message.reply_text(
         "👋 Привет!\n\n"
