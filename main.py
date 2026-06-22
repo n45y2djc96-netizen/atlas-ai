@@ -7,7 +7,7 @@ from telegram.ext import (
     filters,
 )
 
-TOKEN = "8747579183:AAGEdi5ramP3XZ0EEzAQVOCB4IRnqvm8ANc
+TOKEN = "8747579183:AAGEdi5ramP3XZ0EEzAQVOCB4IRnqvm8ANc"
 
 # Здесь временно будут храниться данные пользователей
 users = {}
