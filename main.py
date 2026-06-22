@@ -50,9 +50,22 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     text = update.message.text
 
-    if user_id in users and users[user_id]["step"] == "goal":
-        users[user_id]["goal"] = text
-        users[user_id]["step"] = "done"
+    if user_id in users and users[user_id]["step"] == "level":
+    users[user_id]["level"] = text
+    users[user_id]["step"] = "goal"
+
+    await update.message.reply_text(
+        "Понял 👍\n\nТеперь напиши свою главную цель."
+    )
+    return
+
+elif user_id in users and users[user_id]["step"] == "goal":
+    users[user_id]["goal"] = text
+    users[user_id]["step"] = "done"
+
+    await update.message.reply_text(
+        "🔥 Отлично!\n\nЯ запомнил твою цель.\nТеперь используй /plan"
+    )
 
         await update.message.reply_text(
             f"🔥 Отлично!\n\n"
