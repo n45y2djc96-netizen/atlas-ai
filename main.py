@@ -7,42 +7,21 @@ from telegram.ext import (
     filters
 )
 
-TOKEN = "8747579183:AAGEdi5ramP3XZ0EEzAQVOCB4IRnqvm8ANc" 
+TOKEN = "8747579183:AAGEdi5ramP3XZ0EEzAQVOCB4IRnqvm8ANc"
 
-# Здесь временно храним данные пользователей
+
 users = {}
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
 
-    users[user_id] = {"step": "level"}
+    users[user_id] = {"step": "name"}
 
     await update.message.reply_text(
         "👋 Привет!\n\n"
         "Я ATLAS — твой AI-стратег.\n\n"
-        "Напиши свою главную цель."
-    )
-
-
-async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    user_id = update.effective_chat.id
-
-    if user_id not in users or "goal" not in users[user_id]:
-        await update.message.reply_text(
-            "Сначала напиши свою цель через /start"
-        )
-        return
-
-    goal = users[user_id]["goal"]
-
-    await update.message.reply_text(
-        f"🎯 Твоя цель: {goal}\n\n"
-        "📌 План на сегодня:\n\n"
-        "1. Сделай одно действие для достижения цели.\n"
-        "2. Изучи что-то новое 30 минут.\n"
-        "3. Запиши 3 идеи для развития.\n\n"
-        "🚀 Каждый день двигайся вперёд."
+        "Как тебя зовут?"
     )
 
 
@@ -50,42 +29,73 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     text = update.message.text
 
-    if user_id in users and users[user_id]["step"] == "level":
-    users[user_id]["level"] = text
-    users[user_id]["step"] = "goal"
+    if user_id not in users:
+        await update.message.reply_text(
+            "Напиши /start чтобы начать."
+        )
+        return
 
-    await update.message.reply_text(
-        "Понял 👍\n\nТеперь напиши свою главную цель."
-    )
-    
-    return
+    step = users[user_id]["step"]
 
-elif user_id in users and users[user_id]["step"] == "goal":
-    users[user_id]["goal"] = text
-    users[user_id]["step"] = "done"
-
-    await update.message.reply_text(
-        "🔥 Отлично!\n\nЯ запомнил твою цель.\nТеперь используй /plan"
-    )
+    # Имя
+    if step == "name":
+        users[user_id]["name"] = text
+        users[user_id]["step"] = "age"
 
         await update.message.reply_text(
-            f"🔥 Отлично!\n\n"
-            f"Я сохранил твою цель:\n\n"
-            f"🎯 {text}\n\n"
-            f"Теперь используй команду /plan"
+            "Сколько тебе лет?"
         )
+        return
+
+    # Возраст
+    elif step == "age":
+        users[user_id]["age"] = text
+        users[user_id]["step"] = "goal"
+
+        await update.message.reply_text(
+            "Какая у тебя главная цель?"
+        )
+        return
+
+    # Цель
+    elif step == "goal":
+        users[user_id]["goal"] = text
+        users[user_id]["step"] = "time"
+
+        await update.message.reply_text(
+            "За сколько времени ты хочешь достичь этой цели?"
+        )
+        return
+
+    # Срок достижения
+    elif step == "time":
+        users[user_id]["time"] = text
+        users[user_id]["step"] = "done"
+
+        name = users[user_id]["name"]
+        age = users[user_id]["age"]
+        goal = users[user_id]["goal"]
+        time_goal = users[user_id]["time"]
+
+        await update.message.reply_text(
+            f"📋 Твоя анкета:\n\n"
+            f"👤 Имя: {name}\n"
+            f"🎂 Возраст: {age}\n"
+            f"🎯 Цель: {goal}\n"
+            f"⏳ Срок достижения: {time_goal}\n\n"
+            f"🔥 Отлично! Я всё запомнил."
+        )
+        return
 
     else:
         await update.message.reply_text(
-            "Я запомнил твоё сообщение. Используй /plan для получения плана."
+            "Я уже сохранил твою анкету. Скоро мы добавим новые функции 🚀"
         )
 
 
 app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("plan", plan))
-
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, message)
 )
