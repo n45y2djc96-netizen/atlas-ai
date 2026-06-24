@@ -89,6 +89,15 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
+elif step == "new_goal":
+    users[user_id]["goal"] = text
+    users[user_id]["step"] = "done"
+
+    await update.message.reply_text(
+        f"✅ Новая цель сохранена:\n\n🎯 {text}"
+    )
+    return
+    
     else:
         await update.message.reply_text(
             "Я уже сохранил твою анкету.\n"
@@ -172,6 +181,22 @@ async def motivation(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "🚀 Маленькие действия создают большие результаты."
     )
 
+# Команда /change_goal
+async def change_goal(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    if user_id not in users:
+        await update.message.reply_text(
+            "Сначала пройди регистрацию через /start"
+        )
+        return
+
+    users[user_id]["step"] = "new_goal"
+
+    await update.message.reply_text(
+        "🎯 Напиши свою новую цель."
+    )
+
 # Создание приложения
 app = Application.builder().token(TOKEN).build()
 
@@ -180,6 +205,7 @@ app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
 app.add_handler(CommandHandler("plan", plan))
 app.add_handler(CommandHandler("motivation", motivation))
+app.add_handler(CommandHandler("change_goal", change_goal))
 
 # Сообщения
 app.add_handler(
