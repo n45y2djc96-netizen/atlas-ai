@@ -121,6 +121,33 @@ async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"⏳ Срок достижения: {time_goal}"
     )
 
+# Команда /plan
+async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    if user_id not in users:
+        await update.message.reply_text(
+            "Сначала пройди регистрацию через /start"
+        )
+        return
+
+    if "goal" not in users[user_id]:
+        await update.message.reply_text(
+            "Сначала заверши анкету."
+        )
+        return
+
+    goal = users[user_id]["goal"]
+
+    await update.message.reply_text(
+        f"🎯 Твоя цель: {goal}\n\n"
+        "📌 План на сегодня:\n\n"
+        "1️⃣ Сделай одно важное действие для достижения цели.\n"
+        "2️⃣ Потрать минимум 30 минут на обучение.\n"
+        "3️⃣ Запиши 3 идеи, которые могут приблизить тебя к цели.\n"
+        "4️⃣ В конце дня оцени свой прогресс.\n\n"
+        "🚀 Главное — двигаться вперёд каждый день."
+    )
 
 # Создание приложения
 app = Application.builder().token(TOKEN).build()
@@ -128,6 +155,7 @@ app = Application.builder().token(TOKEN).build()
 # Команды
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
+app.add_handler(CommandHandler("plan", plan))
 
 # Сообщения
 app.add_handler(
