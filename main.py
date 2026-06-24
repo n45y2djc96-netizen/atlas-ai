@@ -149,6 +149,29 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "🚀 Главное — двигаться вперёд каждый день."
     )
 
+# Команда /motivation
+async def motivation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    if user_id not in users:
+        await update.message.reply_text(
+            "Сначала пройди регистрацию через /start"
+        )
+        return
+
+    name = users[user_id].get("name", "друг")
+    goal = users[user_id].get("goal", "своей цели")
+
+    await update.message.reply_text(
+        f"🔥 {name}, помни:\n\n"
+        f"Каждый день, когда ты работаешь над целью:\n"
+        f"🎯 {goal}\n\n"
+        "ты становишься сильнее.\n\n"
+        "Не жди идеального момента.\n"
+        "Начинай сейчас и делай хотя бы один шаг каждый день.\n\n"
+        "🚀 Маленькие действия создают большие результаты."
+    )
+
 # Создание приложения
 app = Application.builder().token(TOKEN).build()
 
@@ -156,6 +179,7 @@ app = Application.builder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
 app.add_handler(CommandHandler("plan", plan))
+app.add_handler(CommandHandler("motivation", motivation))
 
 # Сообщения
 app.add_handler(
