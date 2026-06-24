@@ -9,10 +9,11 @@ from telegram.ext import (
 
 TOKEN = "8747579183:AAGmfGAN4sq7X643y6DmdEUh1IJIgSRqxRA"
 
-
+# Хранилище данных пользователей
 users = {}
 
 
+# Команда /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
 
@@ -25,6 +26,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+# Обработка сообщений
 async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.effective_chat.id
     text = update.message.text
@@ -89,13 +91,45 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     else:
         await update.message.reply_text(
-            "Я уже сохранил твою анкету. Скоро мы добавим новые функции 🚀"
+            "Я уже сохранил твою анкету.\n"
+            "Используй команду /profile чтобы посмотреть профиль."
         )
 
 
+# Команда /profile
+async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_chat.id
+
+    if user_id not in users:
+        await update.message.reply_text(
+            "Сначала пройди регистрацию через /start"
+        )
+        return
+
+    user = users[user_id]
+
+    name = user.get("name", "Не указано")
+    age = user.get("age", "Не указано")
+    goal = user.get("goal", "Не указано")
+    time_goal = user.get("time", "Не указано")
+
+    await update.message.reply_text(
+        f"📋 Твой профиль:\n\n"
+        f"👤 Имя: {name}\n"
+        f"🎂 Возраст: {age}\n"
+        f"🎯 Цель: {goal}\n"
+        f"⏳ Срок достижения: {time_goal}"
+    )
+
+
+# Создание приложения
 app = Application.builder().token(TOKEN).build()
 
+# Команды
 app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("profile", profile))
+
+# Сообщения
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, message)
 )
