@@ -26,15 +26,41 @@ def save_users():
 users = load_users()
 
 
+# ---------- 🧠 AI ENGINE ----------
+def ai_engine(user_text, user):
+    text = user_text.lower()
+
+    goal = user.get("goal", "неизвестна")
+
+    # контекст + персонализация
+    if "заработ" in text:
+        return f"💰 Ты хочешь заработать, верно?\nТвоя цель: {goal}\n\nНачни с навыка + действия + первых клиентов."
+
+    if "лен" in text:
+        return "⚡ Лень убивает результат. Сделай 1 маленький шаг прямо сейчас."
+
+    if "что делать" in text:
+        return "📌 Выбери 1 задачу и сделай её за 10 минут. Не думай — делай."
+
+    if "мотивация" in text:
+        return f"🔥 Ты ближе к цели чем думаешь.\nЦель: {goal}\nПросто не останавливайся."
+
+    return f"🤖 Я понимаю тебя.\nПродолжай двигаться к цели: {goal}"
+
+
 # ---------- START ----------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
 
-    users[user_id] = {"step": "name"}
+    users[user_id] = {
+        "step": "name",
+        "memory": [],
+        "level": "beginner"
+    }
     save_users()
 
     await update.message.reply_text(
-        "👋 Привет! Я ATLAS\n\nКак тебя зовут?"
+        "👋 Привет! Я ATLAS AI\n\nКак тебя зовут?"
     )
 
 
@@ -47,46 +73,74 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Нажми /start")
         return
 
-    step = users[user_id]["step"]
+    user = users[user_id]
 
+    # память (как человек)
+    user["memory"].append(text)
+    user["memory"] = user["memory"][-20:]
+
+    step = user["step"]
+
+    # анкета
     if step == "name":
-        users[user_id]["name"] = text
-        users[user_id]["step"] = "age"
+        user["name"] = text
+        user["step"] = "age"
         save_users()
-
         await update.message.reply_text("Сколько тебе лет?")
         return
 
     elif step == "age":
-        users[user_id]["age"] = text
-        users[user_id]["step"] = "goal"
+        user["age"] = text
+        user["step"] = "goal"
         save_users()
-
-        await update.message.reply_text("Какая цель?")
+        await update.message.reply_text("Какая твоя цель?")
         return
 
     elif step == "goal":
-        users[user_id]["goal"] = text
-        users[user_id]["step"] = "time"
+        user["goal"] = text
+        user["step"] = "time"
         save_users()
-
         await update.message.reply_text("За сколько времени?")
         return
 
     elif step == "time":
-        users[user_id]["time"] = text
-        users[user_id]["step"] = "done"
+        user["time"] = text
+        user["step"] = "done"
         save_users()
 
-        u = users[user_id]
-
         await update.message.reply_text(
-            f"📋 Готово!\n\n"
-            f"👤 {u['name']}\n"
-            f"🎯 {u['goal']}\n"
-            f"⏳ {u['time']}"
+            f"📋 ГОТОВО:\n\n"
+            f"👤 {user['name']}\n"
+            f"🎯 {user['goal']}\n"
+            f"⏳ {user['time']}\n\n"
+            "🚀 Теперь просто пиши мне — я буду помогать"
         )
         return
+
+    # 🤖 AI MODE
+    answer = ai_engine(text, user)
+    save_users()
+
+    await update.message.reply_text(answer)
+
+
+# ---------- PROFILE ----------
+async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала /start")
+        return
+
+    u = users[user_id]
+
+    await update.message.reply_text(
+        f"📊 ПРОФИЛЬ:\n\n"
+        f"👤 {u.get('name')}\n"
+        f"🎯 {u.get('goal')}\n"
+        f"⏳ {u.get('time')}\n\n"
+        f"🧠 Уровень: {u.get('level')}"
+    )
 
 
 # ---------- PLAN ----------
@@ -100,8 +154,11 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     goal = users[user_id].get("goal", "цель")
 
     await update.message.reply_text(
-        f"🎯 Цель: {goal}\n\n"
-        "1. Действие\n2. Обучение\n3. Практика"
+        f"🎯 ЦЕЛЬ: {goal}\n\n"
+        "1. 1 действие\n"
+        "2. 30 минут обучения\n"
+        "3. Практика\n\n"
+        "🚀 Делай каждый день"
     )
 
 
@@ -109,9 +166,9 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
 app = Application.builder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
+app.add_handler(CommandHandler("profile", profile))
 app.add_handler(CommandHandler("plan", plan))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
 
-print("BOT STARTED")
-
+print("🚀 ATLAS AI V3 STARTED")
 app.run_polling()
