@@ -176,6 +176,20 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
 
+async def upgrade(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала используй /start")
+        return
+
+    users[user_id]["plan"] = "pro"
+    save_users()
+
+    await update.message.reply_text(
+        "💎 Поздравляю! PRO режим активирован."
+    )
+
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
 app.add_handler(CommandHandler("plan", plan))
