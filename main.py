@@ -1,5 +1,3 @@
-import json
-import os
 from telegram import Update
 from telegram.ext import (
     Application,
@@ -8,45 +6,11 @@ from telegram.ext import (
     ContextTypes,
     filters
 )
+import asyncio
 
 TOKEN = "8747579183:AAE0h-I-GKJvard3F4YDWKuTWR0CPqbvyYc"
-DATA_FILE = "users.json"
 
-# ---------- LOAD ----------
-def load_users():
-    if os.path.exists(DATA_FILE):
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {}
-
-def save_users():
-    with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(users, f, ensure_ascii=False, indent=2)
-
-users = load_users()
-
-
-# ---------- 🧠 AI ENGINE ----------
-def ai_engine(user_text, user):
-    text = user_text.lower()
-
-    goal = user.get("goal", "неизвестна")
-
-    # контекст + персонализация
-    if "заработ" in text:
-        return f"💰 Ты хочешь заработать, верно?\nТвоя цель: {goal}\n\nНачни с навыка + действия + первых клиентов."
-
-    if "лен" in text:
-        return "⚡ Лень убивает результат. Сделай 1 маленький шаг прямо сейчас."
-
-    if "что делать" in text:
-        return "📌 Выбери 1 задачу и сделай её за 10 минут. Не думай — делай."
-
-    if "мотивация" in text:
-        return f"🔥 Ты ближе к цели чем думаешь.\nЦель: {goal}\nПросто не останавливайся."
-
-    return f"🤖 Я понимаю тебя.\nПродолжай двигаться к цели: {goal}"
-
+users = {}
 
 # ---------- START ----------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -54,17 +18,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     users[user_id] = {
         "step": "name",
-        "memory": [],
-        "level": "beginner"
+        "plan": "free"
     }
-    save_users()
 
     await update.message.reply_text(
-        "👋 Привет! Я ATLAS AI\n\nКак тебя зовут?"
+        "👋 Привет! Я ATLAS\n\nКак тебя зовут?"
     )
 
 
-# ---------- MESSAGE ----------
+# ---------- MESSAGE FLOW ----------
 async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
     text = update.message.text
@@ -73,55 +35,49 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Нажми /start")
         return
 
-    user = users[user_id]
+    step = users[user_id]["step"]
 
-    # память (как человек)
-    user["memory"].append(text)
-    user["memory"] = user["memory"][-20:]
-
-    step = user["step"]
-
-    # анкета
     if step == "name":
-        user["name"] = text
-        user["step"] = "age"
-        save_users()
+        users[user_id]["name"] = text
+        users[user_id]["step"] = "age"
         await update.message.reply_text("Сколько тебе лет?")
         return
 
     elif step == "age":
-        user["age"] = text
-        user["step"] = "goal"
-        save_users()
+        users[user_id]["age"] = text
+        users[user_id]["step"] = "goal"
         await update.message.reply_text("Какая твоя цель?")
         return
 
     elif step == "goal":
-        user["goal"] = text
-        user["step"] = "time"
-        save_users()
+        users[user_id]["goal"] = text
+        users[user_id]["step"] = "time"
         await update.message.reply_text("За сколько времени?")
         return
 
     elif step == "time":
-        user["time"] = text
-        user["step"] = "done"
-        save_users()
+        users[user_id]["time"] = text
+        users[user_id]["step"] = "done"
+
+        u = users[user_id]
 
         await update.message.reply_text(
             f"📋 ГОТОВО:\n\n"
-            f"👤 {user['name']}\n"
-            f"🎯 {user['goal']}\n"
-            f"⏳ {user['time']}\n\n"
-            "🚀 Теперь просто пиши мне — я буду помогать"
+            f"👤 {u['name']}\n"
+            f"🎯 {u['goal']}\n"
+            f"⏳ {u['time']}\n\n"
+            "🚀 Используй /plan /profile /upgrade"
         )
         return
 
-    # 🤖 AI MODE
-    answer = ai_engine(text, user)
-    save_users()
+    # 🤖 AI режим
+    goal = users[user_id].get("goal", "цель")
 
-    await update.message.reply_text(answer)
+    await update.message.reply_text(
+        f"🤖 Я думаю...\n\n"
+        f"Цель: {goal}\n\n"
+        "👉 Делай 1 шаг каждый день"
+    )
 
 
 # ---------- PROFILE ----------
@@ -138,8 +94,8 @@ async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
         f"📊 ПРОФИЛЬ:\n\n"
         f"👤 {u.get('name')}\n"
         f"🎯 {u.get('goal')}\n"
-        f"⏳ {u.get('time')}\n\n"
-        f"🧠 Уровень: {u.get('level')}"
+        f"⏳ {u.get('time')}\n"
+        f"💎 План: {u.get('plan','free')}"
     )
 
 
@@ -156,10 +112,47 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"🎯 ЦЕЛЬ: {goal}\n\n"
         "1. 1 действие\n"
-        "2. 30 минут обучения\n"
+        "2. 30 минут работы\n"
         "3. Практика\n\n"
-        "🚀 Делай каждый день"
+        "🚀 Действие > мысли"
     )
+
+
+# ---------- UPGRADE ----------
+async def upgrade(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала /start")
+        return
+
+    users[user_id]["plan"] = "pro"
+
+    await update.message.reply_text(
+        "💎 PRO активирован!\n\n"
+        "Теперь у тебя расширенные возможности 🚀"
+    )
+
+
+# ---------- AI MEMORY LOOP (опционально) ----------
+async def reminder(app):
+    while True:
+        await asyncio.sleep(60 * 60 * 24)  # 1 день
+
+        for user_id in users:
+            try:
+                goal = users[user_id].get("goal", "цель")
+
+                await app.bot.send_message(
+                    chat_id=user_id,
+                    text=f"🔔 Напоминание:\nДвигайся к цели:\n🎯 {goal}"
+                )
+            except:
+                pass
+
+
+async def on_start(app):
+    asyncio.create_task(reminder(app))
 
 
 # ---------- APP ----------
@@ -168,7 +161,9 @@ app = Application.builder().token(TOKEN).build()
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
 app.add_handler(CommandHandler("plan", plan))
+app.add_handler(CommandHandler("upgrade", upgrade))
+
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
 
-print("🚀 ATLAS AI V3 STARTED")
-app.run_polling()
+print("🚀 ATLAS FINAL RUNNING")
+app.run_polling(on_startup=on_start)
