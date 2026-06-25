@@ -9,6 +9,8 @@ from telegram.ext import (
     filters
 )
 
+from payments import activate_pro, is_pro
+
 TOKEN = "8747579183:AAE0h-I-GKJvard3F4YDWKuTWR0CPqbvyYc"
 DATA_FILE = "users.json"
 
