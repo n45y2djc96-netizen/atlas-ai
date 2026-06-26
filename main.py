@@ -10,6 +10,9 @@ from telegram.ext import (
 )
 
 from payments import activate_pro, is_pro
+from goals import change_goal, get_goal
+from progress import add_progress, get_progress
+from reminders import get_reminder
 
 TOKEN = "8747579183:AAE0h-I-GKJvard3F4YDWKuTWR0CPqbvyYc"
 DATA_FILE = "users.json"
