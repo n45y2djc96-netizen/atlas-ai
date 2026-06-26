@@ -171,8 +171,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     from ai import chat_ai
 
 answer = chat_ai(text)
-   
-     save_users()
+  save_users()
 
     await update.message.reply_text(answer)
 
