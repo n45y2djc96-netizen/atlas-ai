@@ -168,13 +168,14 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-  # 🤖 AI ответ
-answer = chat_ai(text)
 
-await update.message.reply_text(answer)
+# ---------- AI (ИСПРАВЛЕНО ТУТ) ----------
+    answer = chat_ai(text)
 
-save_users()
-return
+    await update.message.reply_text(answer)
+
+    save_users()
+
 
 
 # ---------- PROFILE ----------
