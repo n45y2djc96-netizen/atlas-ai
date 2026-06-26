@@ -173,6 +173,29 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+# ---------- MOTIVATION ----------
+async def motivation(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text(
+            "Сначала используй /start"
+        )
+        return
+
+    name = users[user_id].get("name", "друг")
+    goal = users[user_id].get("goal", "своей цели")
+
+    await update.message.reply_text(
+        f"🔥 {name}, помни:\n\n"
+        f"Каждый день приближает тебя к цели:\n"
+        f"🎯 {goal}\n\n"
+        "Не жди идеального момента.\n"
+        "Сделай хотя бы один шаг сегодня.\n\n"
+        "🚀 Маленькие действия создают большие результаты!"
+    )
+
+
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
 
