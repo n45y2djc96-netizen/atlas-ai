@@ -74,8 +74,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     save_users()
 
     await update.message.reply_text(
-        "👋 Привет! Я ATLAS\n\nКак тебя зовут?"
-    )
+    "👋 Привет! Я ATLAS\n\nКак тебя зовут?",
+    reply_markup=main_keyboard()
+)
 
 
 # ---------- MESSAGE ----------
@@ -98,6 +99,46 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     step = user["step"]
 
+# ---------- BUTTONS ----------
+if text == "🎯 Цель":
+    goal = user.get("goal", "Цель не указана")
+
+    await update.message.reply_text(
+        f"🎯 Твоя цель:\n\n{goal}"
+    )
+    return
+
+if text == "📈 Прогресс":
+    progress = user.get("progress", 0)
+
+    await update.message.reply_text(
+        f"📈 Выполнено шагов: {progress}"
+    )
+    return
+
+if text == "🔥 Мотивация":
+    await update.message.reply_text(
+        "🔥 Никогда не сдавайся. Один шаг каждый день меняет жизнь."
+    )
+    return
+
+if text == "📋 План":
+    goal = user.get("goal", "цель")
+
+    await update.message.reply_text(
+        f"📋 План для цели:\n🎯 {goal}\n\n"
+        "1. Сделай одно действие.\n"
+        "2. Изучи что-то новое.\n"
+        "3. Зафиксируй результат."
+    )
+    return
+
+if text == "💎 PRO":
+    await update.message.reply_text(
+        "💎 PRO скоро появится.\nСледи за обновлениями."
+    )
+    return
+    
     if step == "name":
         user["name"] = text
         user["step"] = "age"
