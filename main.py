@@ -98,47 +98,40 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user["memory"] = user["memory"][-20:]
 
     step = user["step"]
-    
-# ---------- BUTTONS ----------
-if text == "🎯 Цель":
-    goal = user.get("goal", "Цель не указана")
 
-    await update.message.reply_text(
-        f"🎯 Твоя цель:\n\n{goal}"
-    )
-    return
+    # ---------- BUTTONS ----------
+    if text == "🎯 Цель":
+        goal = user.get("goal", "Цель не указана")
 
-if text == "📈 Прогресс":
-    progress = user.get("progress", 0)
+        await update.message.reply_text(f"🎯 Твоя цель:\n\n{goal}")
+        return
 
-    await update.message.reply_text(
-        f"📈 Выполнено шагов: {progress}"
-    )
-    return
+    if text == "📈 Прогресс":
+        progress = user.get("progress", 0)
 
-if text == "🔥 Мотивация":
-    await update.message.reply_text(
-        "🔥 Никогда не сдавайся. Один шаг каждый день меняет жизнь."
-    )
-    return
+        await update.message.reply_text(f"📈 Выполнено шагов: {progress}")
+        return
 
-if text == "📋 План":
-    goal = user.get("goal", "цель")
+    if text == "🔥 Мотивация":
+        await update.message.reply_text("🔥 Никогда не сдавайся. Один шаг каждый день меняет жизнь.")
+        return
 
-    await update.message.reply_text(
-        f"📋 План для цели:\n🎯 {goal}\n\n"
-        "1. Сделай одно действие.\n"
-        "2. Изучи что-то новое.\n"
-        "3. Зафиксируй результат."
-    )
-    return
+    if text == "📋 План":
+        goal = user.get("goal", "цель")
 
-if text == "💎 PRO":
-    await update.message.reply_text(
-        "💎 PRO скоро появится.\nСледи за обновлениями."
-    )
-    return
-    
+        await update.message.reply_text(
+            f"📋 План для цели:\n🎯 {goal}\n\n"
+            "1. Сделай одно действие.\n"
+            "2. Изучи что-то новое.\n"
+            "3. Зафиксируй результат."
+        )
+        return
+
+    if text == "💎 PRO":
+        await update.message.reply_text("💎 PRO скоро появится.\nСледи за обновлениями.")
+        return
+
+    # ---------- STEP LOGIC ----------
     if step == "name":
         user["name"] = text
         user["step"] = "age"
