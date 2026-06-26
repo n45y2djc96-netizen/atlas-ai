@@ -98,7 +98,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user["memory"] = user["memory"][-20:]
 
     step = user["step"]
-
+    
 # ---------- BUTTONS ----------
 if text == "🎯 Цель":
     goal = user.get("goal", "Цель не указана")
