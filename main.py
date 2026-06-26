@@ -199,6 +199,53 @@ async def motivation(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+# ---------- GOAL ----------
+async def goal(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала используй /start")
+        return
+
+    goal_text = get_goal(users, user_id)
+
+    await update.message.reply_text(
+        f"🎯 Твоя цель:\n\n{goal_text}"
+    )
+
+
+# ---------- PROGRESS ----------
+async def progress(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала используй /start")
+        return
+
+    total = get_progress(users, user_id)
+
+    await update.message.reply_text(
+        f"📈 Твой прогресс:\n\n🔥 Выполнено шагов: {total}"
+    )
+
+
+# ---------- DONE ----------
+async def done(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    result = add_progress(users, user_id)
+    save_users()
+
+    await update.message.reply_text(result)
+
+
+# ---------- REMIND ----------
+async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        get_reminder()
+    )
+
+
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
 
@@ -222,6 +269,10 @@ app.add_handler(CommandHandler("plan", plan))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
 app.add_handler(CommandHandler("upgrade", upgrade))
 app.add_handler(CommandHandler("motivation", motivation))
+app.add_handler(CommandHandler("goal", goal))
+app.add_handler(CommandHandler("progress", progress))
+app.add_handler(CommandHandler("done", done))
+app.add_handler(CommandHandler("remind", remind))
 
 print("🚀 ATLAS RUNNING")
 app.run_polling()
