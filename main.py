@@ -14,7 +14,6 @@ from goals import change_goal, get_goal
 from progress import add_progress, get_progress
 from reminders import get_reminder
 from atlas_keyboard import main_keyboard
-from ai import chat_ai
 
 TOKEN = "8747579183:AAE0h-I-GKJvard3F4YDWKuTWR0CPqbvyYc"
 DATA_FILE = "users.json"
