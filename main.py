@@ -15,7 +15,7 @@ from progress import add_progress, get_progress
 from reminders import get_reminder
 from atlas_keyboard import main_keyboard
 
-TOKEN = "8747579183:AAE0h-I-GKJvard3F4YDWKuTWR0CPqbvyYc"
+TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
 
 # ---------- LOAD ----------
