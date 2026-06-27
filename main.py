@@ -169,7 +169,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ---------- AI (ИСПРАВЛЕНО ТУТ) ----------
-    answer = chat_ai(text)
+    answer = chat_ai(text, user["memory"])
 
     await update.message.reply_text(answer)
 
