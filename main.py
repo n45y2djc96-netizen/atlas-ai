@@ -14,6 +14,7 @@ from goals import change_goal, get_goal
 from progress import add_progress, get_progress
 from reminders import get_reminder
 from atlas_keyboard import main_keyboard
+from motivation_texts import get_motivation
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
