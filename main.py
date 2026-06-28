@@ -114,8 +114,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if text == "🔥 Мотивация":
-        await update.message.reply_text("🔥 Никогда не сдавайся. Один шаг каждый день меняет жизнь.")
-        return
+    await update.message.reply_text(
+        get_motivation()
+    )
+    return
 
     if text == "📋 План":
         goal = user.get("goal", "цель")
