@@ -15,6 +15,7 @@ from progress import add_progress, get_progress
 from reminders import get_reminder
 from atlas_keyboard import main_keyboard
 from motivation_texts import get_motivation
+from ai import chat_ai
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
@@ -114,10 +115,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if text == "🔥 Мотивация":
-    await update.message.reply_text(
-        get_motivation()
-    )
-    return
+       await update.message.reply_text(
+           get_motivation()
+       )
+       return
 
     if text == "📋 План":
         goal = user.get("goal", "цель")
