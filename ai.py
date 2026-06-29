@@ -48,4 +48,7 @@ def chat_ai(text, memory, user):
 
         data = response.json()
 
-        return data["choices"][0]["message"]["content"]
+        return data["choices"][0]["message"["content"]
+        
+    except Exception as e:
+        return f"❌ Ошибка: {e}"
