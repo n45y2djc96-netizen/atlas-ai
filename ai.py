@@ -43,13 +43,9 @@ def chat_ai(text, memory, user):
             timeout=60
         )
 
+        if response.status_code != 200:
+            return f"❌ Ошибка {response.status_code}\n{response.text}"
+
         data = response.json()
 
-        if "choices" in data:
-            return data["choices"][0]["message"]["content"]
-
-        print(data)
-        return "❌ AI временно недоступен."
-
-    except Exception as e:
-        return f"❌ Ошибка: {e}"
+        return data["choices"][0]["message"]["content"]
