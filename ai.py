@@ -51,5 +51,4 @@ def chat_ai(text, memory, user):
         return "❌ AI временно недоступен."
 
     except Exception as e:
-        print(e)
-        return "❌ Ошибка подключения к AI."
+        return f"❌ Ошибка: {e}"
