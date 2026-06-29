@@ -53,10 +53,7 @@ def chat_ai(text, memory, user):
             "4. Получи первых пользователей.\n"
             "5. Улучшай продукт на основе отзывов."
         )
-
-    for key, value in knowledge.items():
-        if key in text:
-            return f"📚 {value}"
+#
 
     return (
         
@@ -182,3 +179,7 @@ if "продуктивност" in text:
         "3. Убирай отвлекающие факторы.\n"
         "4. Отдыхай."
     )
+    
+     for key, value in knowledge.items():
+         if key in text:
+             return f"📚 {value}"
