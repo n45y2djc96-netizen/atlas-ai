@@ -1,10 +1,7 @@
 import os
-import requests
+from groq import Groq
 
-API_KEY = os.getenv("OPENROUTER_API_KEY")
-
-API_URL = "https://openrouter.ai/api/v1/chat/completions"
-
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def chat_ai(text, memory, user):
     try:
@@ -13,8 +10,7 @@ def chat_ai(text, memory, user):
                 "role": "system",
                 "content": (
                     "Ты ATLAS — умный AI-помощник. "
-                    "Помогаешь с бизнесом, заработком, саморазвитием, "
-                    "обучением и отвечаешь как настоящий AI."
+                    "Отвечай понятно, подробно и дружелюбно."
                 )
             }
         ]
@@ -30,25 +26,14 @@ def chat_ai(text, memory, user):
             "content": text
         })
 
-        response = requests.post(
-            API_URL,
-            headers={
-                "Authorization": f"Bearer {API_KEY}",
-                "Content-Type": "application/json"
-            },
-            json={
-                "model": "openrouter/auto",
-                "messages": messages
-            },
-            timeout=60
+        response = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=messages,
+            temperature=0.7,
+            max_tokens=1024
         )
 
-        if response.status_code != 200:
-            return f"❌ Ошибка {response.status_code}\n{response.text}"
+        return response.choices[0].message.content
 
-        data = response.json()
-
-        return data["choices"][0]["message"]["content"]
-        
     except Exception as e:
         return f"❌ Ошибка: {e}"
