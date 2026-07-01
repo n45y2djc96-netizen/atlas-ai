@@ -21,6 +21,14 @@ def chat_ai(text, memory, user):
                 "content": msg
             })
 
+facts = "\n".join(user.get("facts", []))
+
+if facts:
+    messages.append({
+        "role": "system",
+        "content": f"Запомни пользователя:\n{facts}"
+    })
+        
         messages.append({
             "role": "user",
             "content": text
