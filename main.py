@@ -67,10 +67,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     users[user_id] = {
         "step": "name",
         "memory": [],
+        "facts": [],
         "level": "beginner",
         "goal": "",
         "age": "",
-        "time": ""
+        "time": "",
+        "name": ""
     }
 
     save_users()
