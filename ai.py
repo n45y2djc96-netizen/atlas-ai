@@ -136,6 +136,12 @@ elif any(word in t for word in [
 """
         
         if facts:
+            if role:
+    messages.append({
+        "role": "system",
+        "content": role
+    })
+            
             messages.append({
                 "role": "system",
                 "content": f"Информация о пользователе:\n{facts}"
