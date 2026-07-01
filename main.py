@@ -178,6 +178,22 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ---------- AI (ИСПРАВЛЕНО ТУТ) ----------
+    t = text.lower()
+
+    if "меня зовут" in t:
+        user["facts"].append(text)
+
+    if "мне " in t and "лет" in t:
+        user["facts"].append(text)
+
+    if "я люблю" in t:
+        user["facts"].append(text)
+
+    if "моя цель" in t:
+        user["facts"].append(text)
+
+    user["facts"] = user["facts"][-30:]
+    
     answer = chat_ai(text, user["memory"], user)
 
     await update.message.reply_text(answer)
