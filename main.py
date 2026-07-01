@@ -88,14 +88,14 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
     text = update.message.text
 
-    if "facts" not in user:
-        user["facts"] = []
-    
     if user_id not in users:
         await update.message.reply_text("Нажми /start")
         return
 
     user = users[user_id]
+
+    if "facts" not in user:
+        user["facts"] = []
 
     # memory FIX
     if "memory" not in user:
