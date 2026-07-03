@@ -76,8 +76,12 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "age": "",
         "time": "",
         "name": ""
-    }
+        "messages_today": 0,
+        "plan": "free",
+    
+     }
 
+    
     save_users()
 
     await update.message.reply_text(
