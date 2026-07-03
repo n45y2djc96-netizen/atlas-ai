@@ -213,7 +213,9 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     Используй только эту информацию при ответе.
     """
-
+    
+    update_memory(user, text)
+    
     answer = chat_ai(text, user["memory"], user)
 
     await update.message.reply_text(answer)
