@@ -75,7 +75,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "goal": "",
         "age": "",
         "time": "",
-        "name": ""
+        "name": "",
         "messages_today": 0,
         "plan": "free",
     
@@ -111,29 +111,32 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user["memory"] = user["memory"][-20:]
 
     step = user["step"]
-
-# ---------- FREE LIMIT ----------
-
-if "messages_today" not in user:
-    user["messages_today"] = 0
-
-if "plan" not in user:
-    user["plan"] = "free"
-
-if user["plan"] == "free" and user["messages_today"] >= 10:
-
-    await update.message.reply_text(
-        "💎 Бесплатный лимит сообщений на сегодня закончился.\n\n"
-        "ATLAS PRO дает:\n"
-        "♾ Безлимитные сообщения\n"
-        "🌐 Интернет\n"
-        "🧠 Полную память\n"
-        "⚡ Более быстрые ответы\n\n"
-        "Напиши /upgrade чтобы перейти на PRO."
-    )
-    return
     
-    # ---------- BUTTONS ----------
+    
+    
+    # ---------- FREE LIMIT ----------
+
+    if "messages_today" not in user:
+        user["messages_today"] = 0
+
+    if "plan" not in user:
+        user["plan"] = "free"
+
+    if user["plan"] == "free" and user["messages_today"] >= 10:
+        await update.message.reply_text(
+            "💎 Бесплатный лимит сообщений закончился.\n\n"
+            "ATLAS PRO включает:\n"
+            "♾ Безлимит сообщений\n"
+            "🌐 Интернет\n"
+            "🧠 Полную память\n"
+            "⚡ Максимальную скорость\n\n"
+            "Напиши /upgrade"
+        )
+        return
+
+
+   
+     # ---------- BUTTONS ----------
     if text == "🎯 Цель":
         goal = user.get("goal", "Цель не указана")
 
@@ -167,7 +170,9 @@ if user["plan"] == "free" and user["messages_today"] >= 10:
         await update.message.reply_text("💎 PRO скоро появится.\nСледи за обновлениями.")
         return
 
-    # ---------- STEP LOGIC ----------
+   
+    
+     # ---------- STEP LOGIC ----------
     if step == "name":
         user["name"] = text
         user["step"] = "age"
@@ -202,6 +207,8 @@ if user["plan"] == "free" and user["messages_today"] >= 10:
             "🚀 Пиши мне что хочешь"
         )
         return
+
+
 
 
 # ---------- AI (ИСПРАВЛЕНО ТУТ) ----------
@@ -269,6 +276,7 @@ async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+
 # ---------- PLAN ----------
 async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
@@ -285,6 +293,7 @@ async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "2. 30 минут работы\n"
         "3. Практика"
     )
+
 
 
 # ---------- MOTIVATION ----------
@@ -310,6 +319,7 @@ async def motivation(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+
 # ---------- GOAL ----------
 async def goal(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
@@ -323,6 +333,7 @@ async def goal(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         f"🎯 Твоя цель:\n\n{goal_text}"
     )
+
 
 
 # ---------- PROGRESS ----------
@@ -340,6 +351,7 @@ async def progress(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+
 # ---------- DONE ----------
 async def done(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
@@ -350,11 +362,13 @@ async def done(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(result)
 
 
+
 # ---------- REMIND ----------
 async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         get_reminder()
     )
+
 
 
 # ---------- APP ----------
