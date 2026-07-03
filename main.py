@@ -240,6 +240,8 @@ if user["plan"] == "free" and user["messages_today"] >= 10:
     
     update_memory(user, text)
     
+    user["messages_today"] += 1
+    
     answer = chat_ai(text, user["memory"], user)
 
     await update.message.reply_text(answer)
