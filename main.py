@@ -112,6 +112,27 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     step = user["step"]
 
+# ---------- FREE LIMIT ----------
+
+if "messages_today" not in user:
+    user["messages_today"] = 0
+
+if "plan" not in user:
+    user["plan"] = "free"
+
+if user["plan"] == "free" and user["messages_today"] >= 10:
+
+    await update.message.reply_text(
+        "💎 Бесплатный лимит сообщений на сегодня закончился.\n\n"
+        "ATLAS PRO дает:\n"
+        "♾ Безлимитные сообщения\n"
+        "🌐 Интернет\n"
+        "🧠 Полную память\n"
+        "⚡ Более быстрые ответы\n\n"
+        "Напиши /upgrade чтобы перейти на PRO."
+    )
+    return
+    
     # ---------- BUTTONS ----------
     if text == "🎯 Цель":
         goal = user.get("goal", "Цель не указана")
