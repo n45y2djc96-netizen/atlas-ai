@@ -81,7 +81,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
      }
 
-    
     save_users()
 
     await update.message.reply_text(
