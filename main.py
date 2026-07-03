@@ -196,18 +196,21 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user["facts"] = user["facts"][-30:]
     
-    internet = search_web(text)
+    internet = None
+
+    if need_internet(text):
+        internet = search_web(text)
 
     if internet:
         text = f"""
     Вопрос пользователя:
     {text}
 
-    Свежая информация из интернета:
+    Свежая информация:
 
     {internet}
 
-    Используй эти данные при ответе.
+    Используй только эту информацию при ответе.
     """
 
     answer = chat_ai(text, user["memory"], user)
