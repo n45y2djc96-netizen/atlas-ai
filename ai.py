@@ -135,12 +135,35 @@ def chat_ai(text, memory, user):
             })
 
         # Память пользователя
-        facts = "\n".join(user.get("facts", []))
+        profile = ""
 
-        if facts:
+        if user.get("name"):
+            profile += f"Имя: {user['name']}\n"
+
+        if user.get("age"):
+            profile += f"Возраст: {user['age']}\n"
+
+        if user.get("goal"):
+            profile += f"Цель: {user['goal']}\n"
+
+        if user.get("job"):
+            profile += f"Работа: {user['job']}\n"
+
+        if user.get("cat"):
+            profile += f"Кот: {user['cat']}\n"
+
+        if user.get("dog"):
+            profile += f"Собака: {user['dog']}\n"
+
+        if user.get("likes"):
+            profile += "Интересы:\n"
+            for i in user["likes"]:
+                profile += f"- {i}\n"
+
+        if profile:
             messages.append({
                 "role": "system",
-                "content": f"Информация о пользователе:\n{facts}"
+                "content": f"Информация о пользователе:\n{profile}"
             })
 
         # Новый вопрос
