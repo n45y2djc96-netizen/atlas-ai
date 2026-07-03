@@ -17,6 +17,7 @@ from atlas_keyboard import main_keyboard
 from motivation_texts import get_motivation
 from ai import chat_ai
 from search import search_web
+from internet import need_internet
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
