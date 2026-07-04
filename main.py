@@ -137,8 +137,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "⚡ Приоритетные ответы\n"
             "🚀 Новые функции раньше всех",
             reply_markup=pro_keyboard()
-       )
-       return
+        )
+        return
 
    
     
