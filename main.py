@@ -79,6 +79,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "time": "",
         "name": "",
         "messages_today": 0,
+        "reset_time": 0,
         "plan": "free",
     
      }
