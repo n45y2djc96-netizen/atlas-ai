@@ -104,6 +104,22 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user = users[user_id]
 
+    now = int(time.time())
+
+    if user.get("reset_time", 0) == 0:
+        user["reset_time"] = now + 86400
+
+    if now >= user["reset_time"]:
+        user["messages_today"] = 0
+        user["reset_time"] = now + 86400
+        save_users()
+
+        await update.message.reply_text(
+            "🎉 Бесплатный доступ снова открыт!\n\n"
+            "Рад видеть тебя снова ❤️\n\n"
+            "🚀 Можешь продолжить пользоваться ATLAS."
+        )
+    
     if "facts" not in user:
         user["facts"] = []
 
