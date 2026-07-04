@@ -19,6 +19,7 @@ from ai import chat_ai
 from search import search_web
 from internet import need_internet
 from memory import update_memory
+from pro_keyboard import pro_keyboard
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
