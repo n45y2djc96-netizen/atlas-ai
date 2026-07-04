@@ -20,6 +20,7 @@ from search import search_web
 from internet import need_internet
 from memory import update_memory
 from pro_keyboard import pro_keyboard
+from telegram.ext import CallbackQueryHandler
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
@@ -376,6 +377,23 @@ async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# ---------- BUTTONS ----------
+async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == "buy_pro":
+        await query.edit_message_text(
+            "💎 Скоро здесь появится настоящая покупка PRO."
+        )
+
+    elif query.data == "remind_me":
+        await query.edit_message_text(
+            "✅ Отлично!\n\n"
+            "Через 24 часа я снова напомню, что бесплатный доступ открыт."
+        )
+
+
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
 
@@ -403,6 +421,7 @@ app.add_handler(CommandHandler("goal", goal))
 app.add_handler(CommandHandler("progress", progress))
 app.add_handler(CommandHandler("done", done))
 app.add_handler(CommandHandler("remind", remind))
+app.add_handler(CallbackQueryHandler(buttons))
 
 print("🚀 ATLAS RUNNING")
 app.run_polling()
