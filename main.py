@@ -156,13 +156,15 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "⚡ Приоритетные ответы\n"
             "🚀 Новые функции раньше всех",
             reply_markup=pro_keyboard()
+        )
+        
         context.job_queue.run_once(
             free_access_notification,
             when=timedelta(hours=24),
             data=user_id
-        ) 
-        
+     
         )
+        
         return
 
    
