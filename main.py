@@ -411,6 +411,25 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Через 24 часа я снова напомню, что бесплатный доступ открыт."
         )
 
+async def free_access_notification(context: ContextTypes.DEFAULT_TYPE):
+    user_id = context.job.data
+
+    if user_id not in users:
+        return
+
+    users[user_id]["messages_today"] = 0
+    users[user_id]["reset_time"] = 0
+    save_users()
+
+    await context.bot.send_message(
+        chat_id=user_id,
+        text=
+        "🎉 Бесплатный доступ снова открыт!\n\n"
+        "ATLAS снова готов помочь.\n\n"
+        "🚀 Можешь продолжить пользоваться ботом."
+    )
+
+
 
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
