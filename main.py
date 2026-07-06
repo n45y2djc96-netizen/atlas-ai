@@ -406,9 +406,7 @@ async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await query.answer()
 
     if query.data == "buy_pro":
-        await query.edit_message_text(
-            "💎 Скоро здесь появится настоящая покупка PRO."
-        )
+         await buy_pro(update, context)
 
     elif query.data == "remind_me":
         await query.edit_message_text(
