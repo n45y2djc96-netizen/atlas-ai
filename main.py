@@ -110,7 +110,16 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     user = users[user_id]
+    init_user(user)
 
+    if check_reset(user):
+        save_users()
+
+        await update.message.reply_text(
+            "🎉 Бесплатный доступ снова открыт!\n\n"
+            "🚀 Можно продолжать пользоваться ATLAS."
+        )
+    
     now = int(time.time())
 
     if user.get("reset_time", 0) == 0:
