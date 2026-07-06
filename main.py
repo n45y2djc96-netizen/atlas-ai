@@ -32,6 +32,7 @@ from limits import (
 import asyncio
 from scheduler import check_users
 from pro import activate_pro, check_pro
+from stars import buy_pro
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
