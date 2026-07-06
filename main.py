@@ -445,11 +445,14 @@ async def upgrade(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Сначала используй /start")
         return
 
-    users[user_id]["plan"] = "pro"
+    activate_pro(users[user_id])
+
     save_users()
 
     await update.message.reply_text(
-        "💎 Поздравляю! PRO режим активирован."
+        "💎 PRO активирован!\n\n"
+        "📅 Подписка действует 30 дней.\n"
+        "🚀 Спасибо за поддержку ATLAS ❤️"
     )
 
 app.add_handler(CommandHandler("start", start))
