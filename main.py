@@ -141,41 +141,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     
     
-    # ---------- FREE LIMIT ----------
-
-    if "messages_today" not in user:
-        user["messages_today"] = 0
-
-    if "plan" not in user:
-        user["plan"] = "free"
-
-    if user["plan"] == "free" and user["messages_today"] >= 10:
-        await update.message.reply_text(
-            "💎 **Бесплатный лимит на сегодня закончился**\n\n"
-            "Спасибо, что пользуешься ATLAS ❤️\n\n"
-            "Следующий бесплатный доступ откроется через 24 часа.\n\n"
-            "Или продолжай пользоваться без ограничений уже сейчас.\n\n"
-            "💎 ATLAS PRO\n\n"
-            "♾ Безлимитные сообщения\n"
-            "🌐 Интернет в реальном времени\n"
-            "🧠 Полная память\n"
-            "⚡ Приоритетные ответы\n"
-            "🚀 Новые функции раньше всех",
-            reply_markup=pro_keyboard()
-        )
-        
-        context.job_queue.run_once(
-            free_access_notification,
-            when=timedelta(hours=24),
-            data=user_id
-     
-        )
-        
-        return
-
-   
-    
-     # ---------- BUTTONS ----------
+    # ---------- BUTTONS ----------
     if text == "🎯 Цель":
         goal = user.get("goal", "Цель не указана")
 
