@@ -461,4 +461,10 @@ app.add_handler(CommandHandler("remind", remind))
 app.add_handler(CallbackQueryHandler(buttons))
 
 print("🚀 ATLAS RUNNING")
+
+async def post_init(application):
+    asyncio.create_task(check_users(application.bot))
+
+app.post_init = post_init
+
 app.run_polling()
