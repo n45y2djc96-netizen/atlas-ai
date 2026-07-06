@@ -436,6 +436,23 @@ async def free_access_notification(context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# ---------- PAYMENTS ----------
+async def precheckout(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.pre_checkout_query.answer(ok=True)
+
+
+async def successful_payment(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    activate_pro(users[user_id])
+    save_users()
+
+    await update.message.reply_text(
+        "🎉 Спасибо за покупку!\n\n"
+        "💎 PRO активирован на 30 дней."
+    )
+
+
 # ---------- APP ----------
 app = Application.builder().token(TOKEN).build()
 
