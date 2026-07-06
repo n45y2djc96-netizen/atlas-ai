@@ -484,6 +484,10 @@ app.add_handler(CommandHandler("progress", progress))
 app.add_handler(CommandHandler("done", done))
 app.add_handler(CommandHandler("remind", remind))
 app.add_handler(CallbackQueryHandler(buttons))
+app.add_handler(PreCheckoutQueryHandler(precheckout))
+app.add_handler(
+    MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment)
+)
 
 print("🚀 ATLAS RUNNING")
 
