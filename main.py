@@ -268,7 +268,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     update_memory(user, text)
     
-    user["messages_today"] += 1
+    add_message(user)
+    save_users()
     
     answer = chat_ai(text, user["memory"], user)
 
