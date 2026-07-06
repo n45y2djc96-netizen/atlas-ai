@@ -125,7 +125,9 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
     
     now = int(time.time())
-
+    
+    check_pro(user)
+    
     if user.get("reset_time", 0) == 0:
         user["reset_time"] = now + 86400
 
