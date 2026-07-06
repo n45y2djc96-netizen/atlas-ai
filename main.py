@@ -92,8 +92,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "messages_today": 0,
         "reset_time": 0,
         "plan": "free",
-    
-     }
+        "pro_until": 0,
+   
+      }
 
     save_users()
 
