@@ -147,6 +147,13 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user["memory"] = user["memory"][-20:]
 
     step = user["step"]
+    if not can_send(user):
+        await update.message.reply_text(
+            "💎 Бесплатный лимит сообщений закончился.\n\n"
+            "Следующий доступ откроется через 24 часа.",
+            reply_markup=pro_keyboard()
+        )
+        return
     
     
     
