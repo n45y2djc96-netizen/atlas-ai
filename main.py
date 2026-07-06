@@ -1,10 +1,12 @@
 import json
 import os
-from telegram import Update
+from telegram import Update, SuccessfulPayment
 from telegram.ext import (
     Application,
     CommandHandler,
     MessageHandler,
+    CallbackQueryHandler,
+    PreCheckoutQueryHandler,
     ContextTypes,
     filters
 )
