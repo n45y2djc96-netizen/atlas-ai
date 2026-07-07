@@ -22,7 +22,6 @@ from search import search_web
 from internet import need_internet
 from memory import update_memory
 from pro_keyboard import pro_keyboard
-from telegram.ext import CallbackQueryHandler
 import time
 from datetime import timedelta
 from limits import (
