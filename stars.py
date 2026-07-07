@@ -4,7 +4,7 @@ PRICE = 199  # Stars
 
 async def buy_pro(update, context):
     await context.bot.send_invoice(
-        chat_id=query.message.chat.id
+        chat_id=query.message.chat.id,
         title="ATLAS PRO",
         description="Подписка ATLAS PRO на 30 дней",
         payload="atlas_pro",
