@@ -11,7 +11,7 @@ from telegram.ext import (
     filters
 )
 
-from payments import activate_pro, is_pro
+from payments import is_pro
 from goals import change_goal, get_goal
 from progress import add_progress, get_progress
 from reminders import get_reminder
