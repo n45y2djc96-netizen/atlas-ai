@@ -219,6 +219,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if text == "💎 PRO":
         await update.message.reply_text("💎 PRO скоро появится.\nСледи за обновлениями.")
         return
+    
     if step == "change_goal":
         user["goal"] = text
         user["step"] = "done"
