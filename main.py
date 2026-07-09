@@ -337,6 +337,43 @@ async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# ---------- HELP ----------
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "━━━━━━━━━━━━━━━━━━\n\n"
+
+        "🤖 <b>ATLAS</b>\n\n"
+
+        "Твой персональный AI-помощник.\n\n"
+
+        "<b>Что умеет ATLAS:</b>\n\n"
+
+        "🧠 Запоминает информацию о тебе\n"
+        "🎯 Помогает достигать целей\n"
+        "📋 Составляет планы\n"
+        "📈 Следит за прогрессом\n"
+        "🌐 Ищет информацию в интернете\n"
+        "🔥 Мотивирует каждый день\n"
+        "💎 Поддерживает PRO-подписку\n\n"
+
+        "<b>Команды:</b>\n\n"
+
+        "👤 /profile — профиль\n"
+        "🎯 /goal — цель\n"
+        "📈 /progress — прогресс\n"
+        "📋 /plan — план\n"
+        "🔥 /motivation — мотивация\n"
+        "💎 /upgrade — PRO\n"
+        "ℹ️ /help — помощь\n\n"
+
+        "💬 Или просто напиши любой вопрос.\n\n"
+
+        "━━━━━━━━━━━━━━━━━━",
+        parse_mode="HTML"
+    )
+
+
+
 # ---------- PLAN ----------
 async def plan(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
