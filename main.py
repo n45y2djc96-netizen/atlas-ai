@@ -654,6 +654,7 @@ app.add_handler(CommandHandler("remind", remind))
 app.add_handler(CommandHandler("settings", settings))
 app.add_handler(CallbackQueryHandler(buttons))
 app.add_handler(CommandHandler("change_goal", change_goal_command))
+app.add_handler(CommandHandler("restart", restart))
 app.add_handler(PreCheckoutQueryHandler(precheckout))
 app.add_handler(
     MessageHandler(filters.SUCCESSFUL_PAYMENT, successful_payment)
