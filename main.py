@@ -541,6 +541,7 @@ async def upgrade(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("profile", profile))
+app.add_handler(CommandHandler("help", help_command))
 app.add_handler(CommandHandler("plan", plan))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message))
 app.add_handler(CommandHandler("upgrade", upgrade))
