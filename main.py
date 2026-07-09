@@ -95,15 +95,26 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "reset_time": 0,
         "plan": "free",
         "pro_until": 0,
-   
-      }
+    }
 
     save_users()
 
     await update.message.reply_text(
-    "👋 Привет! Я ATLAS\n\nКак тебя зовут?",
-    reply_markup=main_keyboard()
-)
+        "━━━━━━━━━━━━━━━━━━\n\n"
+        "🤖 <b>Добро пожаловать в ATLAS</b>\n\n"
+        "Твой персональный AI-помощник.\n\n"
+        "<b>Я умею:</b>\n\n"
+        "🧠 Запоминать важную информацию\n"
+        "🎯 Помогать достигать целей\n"
+        "🌐 Искать информацию в интернете\n"
+        "📋 Составлять персональные планы\n"
+        "🔥 Поддерживать мотивацию\n\n"
+        "Давай познакомимся.\n\n"
+        "👤 <b>Как тебя зовут?</b>\n\n"
+        "━━━━━━━━━━━━━━━━━━",
+        reply_markup=main_keyboard(),
+        parse_mode="HTML"
+    )
 
 
 # ---------- MESSAGE ----------
