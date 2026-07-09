@@ -83,22 +83,22 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
 
     if user_id not in users:
-    users[user_id] = {
-        "step": "name",
-        "memory": [],
-        "facts": [],
-        "level": "beginner",
-        "goal": "",
-        "age": "",
-        "time": "",
-        "name": "",
-        "messages_today": 0,
-        "reset_time": 0,
-        "plan": "free",
-        "pro_until": 0,
-    }
+        users[user_id] = {
+            "step": "name",
+            "memory": [],
+            "facts": [],
+            "level": "beginner",
+            "goal": "",
+            "age": "",
+            "time": "",
+            "name": "",
+            "messages_today": 0,
+            "reset_time": 0,
+            "plan": "free",
+            "pro_until": 0,
+        }
 
-    save_users()
+        save_users()
       
     user = users[user_id]
 
