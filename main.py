@@ -82,6 +82,7 @@ def ai_engine(user_text, user):
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
 
+    if user_id not in users:
     users[user_id] = {
         "step": "name",
         "memory": [],
@@ -98,7 +99,15 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
 
     save_users()
-
+      
+user = users[user_id]
+if user.get("step") == "done":
+    await update.message.reply_text(
+        "👋 С возвращением в ATLAS!",
+        reply_markup=main_keyboard()
+    )
+    return
+    
     await update.message.reply_text(
         "━━━━━━━━━━━━━━━━━━\n\n"
         "🤖 <b>Добро пожаловать в ATLAS</b>\n\n"
