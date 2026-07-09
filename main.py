@@ -514,6 +514,23 @@ async def settings(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# ---------- CHANGE GOAL ----------
+async def change_goal_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    if user_id not in users:
+        await update.message.reply_text("Сначала используй /start")
+        return
+
+    users[user_id]["step"] = "change_goal"
+    save_users()
+
+    await update.message.reply_text(
+        "🎯 Напиши новую цель."
+    )
+
+
+
 # ---------- BUTTONS ----------
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
