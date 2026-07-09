@@ -237,17 +237,39 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     elif step == "time":
         user["time"] = text
         user["step"] = "done"
+
         save_users()
 
         await update.message.reply_text(
-            f"📋 ГОТОВО:\n\n"
+            "━━━━━━━━━━━━━━━━━━\n\n"
+
+            "🎉 <b>Регистрация завершена!</b>\n\n"
+
+            "Добро пожаловать в <b>ATLAS</b> ❤️\n\n"
+
+            "<b>Теперь я знаю:</b>\n\n"
+
             f"👤 {user.get('name')}\n"
             f"🎯 {user.get('goal')}\n"
             f"⏳ {user.get('time')}\n\n"
-            "🚀 Пиши мне что хочешь"
-        )
-        return
 
+            "<b>Теперь я могу:</b>\n\n"
+
+            "🧠 Запоминать важную информацию\n"
+            "📋 Составлять персональные планы\n"
+            "📈 Следить за прогрессом\n"
+            "🌐 Искать информацию в интернете\n"
+            "🔥 Помогать достигать целей\n\n"
+
+            "💬 Просто напиши любой вопрос.\n\n"
+
+            "🚀 Начнем!\n\n"
+
+            "━━━━━━━━━━━━━━━━━━",
+            parse_mode="HTML"
+       )
+
+       return
 
 
 
