@@ -596,6 +596,7 @@ app.add_handler(CommandHandler("goal", goal))
 app.add_handler(CommandHandler("progress", progress))
 app.add_handler(CommandHandler("done", done))
 app.add_handler(CommandHandler("remind", remind))
+app.add_handler(CommandHandler("settings", settings))
 app.add_handler(CallbackQueryHandler(buttons))
 app.add_handler(PreCheckoutQueryHandler(precheckout))
 app.add_handler(
