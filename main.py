@@ -100,13 +100,14 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     save_users()
       
-user = users[user_id]
-if user.get("step") == "done":
-    await update.message.reply_text(
-        "👋 С возвращением в ATLAS!",
-        reply_markup=main_keyboard()
-    )
-    return
+    user = users[user_id]
+
+    if user.get("step") == "done":
+        await update.message.reply_text(
+            "👋 С возвращением в ATLAS!",
+            reply_markup=main_keyboard()
+        )
+        return
     
     await update.message.reply_text(
         "━━━━━━━━━━━━━━━━━━\n\n"
