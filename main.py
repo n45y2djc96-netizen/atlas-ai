@@ -303,17 +303,36 @@ async def profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = str(update.effective_chat.id)
 
     if user_id not in users:
-        await update.message.reply_text("Сначала /start")
+        await update.message.reply_text(
+            "Сначала используй /start"
+        )
         return
 
-    u = users[user_id]
+    user = users[user_id]
+
+    tariff = "💎 PRO" if user.get("plan") == "pro" else "🆓 FREE"
+
+    memory_count = len(user.get("facts", []))
+
+    progress = get_progress(users, user_id)
 
     await update.message.reply_text(
-        f"📊 ПРОФИЛЬ:\n\n"
-        f"👤 {u.get('name')}\n"
-        f"🎯 {u.get('goal')}\n"
-        f"⏳ {u.get('time')}\n"
-        f"🧠 {u.get('level')}"
+        "━━━━━━━━━━━━━━━━━━\n\n"
+        "👤 <b>ПРОФИЛЬ</b>\n\n"
+
+        f"🙋 Имя: <b>{user.get('name','—')}</b>\n"
+        f"🎂 Возраст: <b>{user.get('age','—')}</b>\n\n"
+
+        f"🎯 Цель:\n<b>{user.get('goal','Не указана')}</b>\n\n"
+
+        f"⏳ Срок:\n<b>{user.get('time','Не указан')}</b>\n\n"
+
+        f"📈 Выполнено задач: <b>{progress}</b>\n"
+        f"🧠 Запомнено фактов: <b>{memory_count}</b>\n"
+        f"💳 Тариф: <b>{tariff}</b>\n"
+
+        "\n━━━━━━━━━━━━━━━━━━",
+        parse_mode="HTML"
     )
 
 
