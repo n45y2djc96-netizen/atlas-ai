@@ -538,6 +538,34 @@ async def change_goal_command(update: Update, context: ContextTypes.DEFAULT_TYPE
     await update.message.reply_text(
         "🎯 Напиши новую цель."
     )
+ 
+
+
+# ---------- RESTART ----------
+async def restart(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = str(update.effective_chat.id)
+
+    users[user_id] = {
+        "step": "name",
+        "memory": [],
+        "facts": [],
+        "level": "beginner",
+        "goal": "",
+        "age": "",
+        "time": "",
+        "name": "",
+        "messages_today": users[user_id].get("messages_today", 0),
+        "reset_time": users[user_id].get("reset_time", 0),
+        "plan": users[user_id].get("plan", "free"),
+        "pro_until": users[user_id].get("pro_until", 0),
+    }
+
+    save_users()
+
+    await update.message.reply_text(
+        "🔄 Регистрация сброшена.\n\n"
+        "👤 Как тебя зовут?"
+    )
 
 
 
