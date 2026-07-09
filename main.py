@@ -500,6 +500,20 @@ async def remind(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 
+# ---------- SETTINGS ----------
+async def settings(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "⚙️ Настройки ATLAS\n\n"
+
+        "/change_name — изменить имя\n"
+        "/change_goal — изменить цель\n"
+        "/change_time — изменить срок\n"
+        "/reset_memory — очистить память\n"
+        "/restart — пройти регистрацию заново"
+    )
+
+
+
 # ---------- BUTTONS ----------
 async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
