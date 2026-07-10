@@ -352,9 +352,18 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     add_message(user)
     save_users()
     
-    answer = chat_ai(text, user["memory"], user)
+    try:
+        answer = chat_ai(text, user["memory"], user)
 
-    await update.message.reply_text(answer)
+        await update.message.reply_text(answer)
+
+    except Exception as e:
+        print("Ошибка:", e)
+
+        await update.message.reply_text(
+            "⚠️ Произошла небольшая ошибка.\n\n"
+            "Попробуй повторить запрос через несколько секунд."
+        )
 
     save_users()
 
