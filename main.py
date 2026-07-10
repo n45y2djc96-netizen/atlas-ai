@@ -296,19 +296,39 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ---------- AI (ИСПРАВЛЕНО ТУТ) ----------
     t = text.lower()
 
-    if "меня зовут" in t:
-        user["facts"].append(text)
+    # ---------- SMART MEMORY ----------
+    memory_words = [
+        "меня зовут",
+        "мне",
+        "мой",
+        "моя",
+        "моё",
+        "люблю",
+        "ненавижу",
+        "хочу",
+        "мечтаю",
+        "работаю",
+        "учусь",
+        "живу",
+        "родился",
+        "цель",
+        "семья",
+        "девушка",
+        "парень",
+        "жена",
+        "муж",
+        "сын",
+        "дочь",
+        "любимое",
+        "интересуюсь",
+        "занимаюсь"
+    ]
 
-    if "мне " in t and "лет" in t:
-        user["facts"].append(text)
+    if any(word in t for word in memory_words):
+        if text not in user["facts"]:
+            user["facts"].append(text)
 
-    if "я люблю" in t:
-        user["facts"].append(text)
-
-    if "моя цель" in t:
-        user["facts"].append(text)
-
-    user["facts"] = user["facts"][-30:]
+    user["facts"] = user["facts"][-50:]
     
     internet = None
 
