@@ -10,7 +10,7 @@ def chat_ai(text, memory, user):
             {
                 "role": "system",
                 "content": """
-"content": """
+
 Ты — ATLAS.
 
 Ты дорогой персональный AI-помощник уровня ChatGPT Plus.
