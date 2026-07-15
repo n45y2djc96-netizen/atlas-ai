@@ -4,7 +4,7 @@ def main_keyboard():
     keyboard = [
         ["🎯 Цель", "📈 Прогресс"],
         ["🔥 Мотивация", "📋 План"],
-        ["💎 PRO"]
+        ["💎 PRO", "⚙️ Настройки"]
     ]
 
     return ReplyKeyboardMarkup(
