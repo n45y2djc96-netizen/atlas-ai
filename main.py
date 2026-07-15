@@ -269,51 +269,51 @@ if step == "change_time":
     
     if step == "settings":
 
-    if text.lower() == "имя":
-        user["step"] = "change_name"
-        save_users()
+        if text.lower() == "имя":
+            user["step"] = "change_name"
+            save_users()
 
-        await update.message.reply_text(
-            "👤 Введи новое имя."
-        )
-        return
+            await update.message.reply_text(
+                "👤 Введи новое имя."
+            )
+            return
 
-    elif text.lower() == "возраст":
-        user["step"] = "change_age"
-        save_users()
+        elif text.lower() == "возраст":
+            user["step"] = "change_age"
+            save_users()
 
-        await update.message.reply_text(
-            "🎂 Введи новый возраст."
-        )
-        return
+            await update.message.reply_text(
+                "🎂 Введи новый возраст."
+            )
+            return
 
-    elif text.lower() == "цель":
-        user["step"] = "change_goal"
-        save_users()
+        elif text.lower() == "цель":
+            user["step"] = "change_goal"
+            save_users()
 
-        await update.message.reply_text(
-            "🎯 Введи новую цель."
-        )
-        return
+            await update.message.reply_text(
+                "🎯 Введи новую цель."
+            )
+            return
 
-    elif text.lower() == "срок":
-        user["step"] = "change_time"
-        save_users()
+        elif text.lower() == "срок":
+            user["step"] = "change_time"
+            save_users()
 
-        await update.message.reply_text(
-            "⏳ Введи новый срок."
-        )
-        return
+            await update.message.reply_text(
+                "⏳ Введи новый срок."
+            )
+            return
 
-    else:
-        await update.message.reply_text(
-            "Напиши:\n\n"
-            "• имя\n"
-            "• возраст\n"
-            "• цель\n"
-            "• срок"
-        )
-        return
+        else:
+            await update.message.reply_text(
+                "Напиши:\n\n"
+                "• имя\n"
+                "• возраст\n"
+                "• цель\n"
+                "• срок"
+            )
+            return
     
     if step == "change_goal":
         user["goal"] = text
