@@ -221,18 +221,18 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
     
     if text == "⚙️ Настройки":
-    user["step"] = "settings"
-    save_users()
+       user["step"] = "settings"
+       save_users()
 
-    await update.message.reply_text(
-        "⚙️ Что ты хочешь изменить?\n\n"
-        "• имя\n"
-        "• возраст\n"
-        "• цель\n"
-        "• срок\n\n"
-        "Напиши одно из этих слов."
-    )
-    return
+       await update.message.reply_text(
+           "⚙️ Что ты хочешь изменить?\n\n"
+           "• имя\n"
+           "• возраст\n"
+           "• цель\n"
+           "• срок\n\n"
+           "Напиши одно из этих слов."
+       )
+       return
     
     if step == "change_goal":
         user["goal"] = text
