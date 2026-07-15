@@ -326,38 +326,44 @@ if step == "change_time":
         )
         return
    
-       if step == "change_name":
-    user["name"] = text
-    user["step"] = "done"
-    save_users()
+    if step == "change_name":
+        user["name"] = text
+        user["step"] = "done"
+        
+        save_users()
 
-    await update.message.reply_text(
-        f"✅ Имя изменено!\n\n👤 Теперь тебя зовут {text}"
-    )
-    return
-
-
-if step == "change_age":
-    user["age"] = text
-    user["step"] = "done"
-    save_users()
-
-    await update.message.reply_text(
-        f"✅ Возраст обновлён!\n\n🎂 {text}"
-    )
-    return
+        await update.message.reply_text(
+            f"✅ Имя изменено!\n\n👤 Теперь тебя зовут {text}"
+        )
+        return
 
 
-if step == "change_time":
-    user["time"] = text
-    user["step"] = "done"
-    save_users()
+    if step == "change_age":
+        user["age"] = text
+        user["step"] = "done"
+        
+        save_users()
 
-    await update.message.reply_text(
-        f"✅ Срок обновлён!\n\n⏳ {text}"
-    )
-    return
-     # ---------- STEP LOGIC ----------
+        await update.message.reply_text(
+            f"✅ Возраст обновлён!\n\n🎂 {text}"
+        )
+        return
+
+
+    if step == "change_time":
+        user["time"] = text
+        user["step"] = "done"
+        
+        save_users()
+
+        await update.message.reply_text(
+            f"✅ Срок обновлён!\n\n⏳ {text}"
+        )
+        return
+     
+    
+    
+    # ---------- STEP LOGIC ----------
     if step == "name":
         user["name"] = text
         user["step"] = "age"
