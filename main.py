@@ -183,7 +183,40 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=pro_keyboard()
         )
         return
-    
+    if step == "change_name":
+    user["name"] = text
+    user["step"] = "done"
+
+    save_users()
+
+    await update.message.reply_text(
+        f"✅ Имя изменено!\n\n👤 Теперь тебя зовут {text}"
+    )
+    return
+
+
+if step == "change_age":
+    user["age"] = text
+    user["step"] = "done"
+
+    save_users()
+
+    await update.message.reply_text(
+        f"✅ Возраст обновлён!\n\n🎂 {text} лет"
+    )
+    return
+
+
+if step == "change_time":
+    user["time"] = text
+    user["step"] = "done"
+
+    save_users()
+
+    await update.message.reply_text(
+        f"✅ Срок обновлён!\n\n⏳ {text}"
+    )
+    return
     
     
     # ---------- BUTTONS ----------
