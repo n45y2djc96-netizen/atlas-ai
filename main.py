@@ -85,15 +85,36 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if user_id not in users:
         users[user_id] = {
             "step": "name",
+
+            "name": "",
+            "age": "",
+            "goal": "",
+            "time": "",
+
+            "level": "beginner",
+
             "memory": [],
             "facts": [],
-            "level": "beginner",
-            "goal": "",
-            "age": "",
-            "time": "",
-            "name": "",
+
+            # Память ATLAS X
+            "dreams": [],
+            "promises": [],
+            "mistakes": [],
+            "wins": [],
+            "habits": [],
+            "motivation": [],
+            "weaknesses": [],
+            "strengths": [],
+            "projects": [],
+            "fears": [],
+            "history": [],
+            "observations": [],
+
+            "progress": 0,
+
             "messages_today": 0,
             "reset_time": 0,
+
             "plan": "free",
             "pro_until": 0,
         }
