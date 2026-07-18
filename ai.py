@@ -205,7 +205,41 @@ def chat_ai(text, memory, user):
                 "content": f"Информация о пользователе:\n{profile}"
             })
 
-        # Новый вопрос
+        # Память ATLAS
+        memory_info = ""
+
+        if user.get("dreams"):
+            memory_info += "Мечты пользователя:\n"
+            for i in user["dreams"][-5:]:
+                memory_info += f"- {i}\n"
+
+        if user.get("promises"):
+            memory_info += "\nОбещания пользователя:\n"
+            for i in user["promises"][-5:]:
+                memory_info += f"- {i}\n"
+
+        if user.get("wins"):
+            memory_info += "\nПоследние победы:\n"
+            for i in user["wins"][-5:]:
+                memory_info += f"- {i}\n"
+
+        if user.get("mistakes"):
+            memory_info += "\nОшибки:\n"
+            for i in user["mistakes"][-5:]:
+                memory_info += f"- {i}\n"
+
+        if user.get("fears"):
+            memory_info += "\nСтрахи:\n"
+            for i in user["fears"][-5:]:
+                memory_info += f"- {i}\n"
+
+        if memory_info:
+            messages.append({
+                "role": "system",
+                "content": memory_info
+            })
+       
+         # Новый вопрос
         messages.append({
             "role": "user",
             "content": text
