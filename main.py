@@ -37,6 +37,7 @@ from stars import buy_pro
 from memory import update_memory
 from atlas_memory import analyze_user
 from atlas_observer import observe_user
+from atlas_core import build_strategy
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
