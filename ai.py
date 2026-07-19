@@ -244,7 +244,17 @@ def chat_ai(text, memory, user):
             "role": "user",
             "content": text
         })
+         # Анализ личности ATLAS
 
+        if user.get("observations"):
+
+            messages.append({
+                "role": "system",
+                "content":
+                "Наблюдения ATLAS о пользователе:\n\n"
+                + "\n".join(user["observations"])
+            })
+        
         response = client.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=messages,
