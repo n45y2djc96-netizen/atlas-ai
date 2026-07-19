@@ -27,7 +27,16 @@ async def check_users(bot):
         now = int(time.time())
 
         for user_id, user in users.items():
+        
+            # Отправляем инициативное сообщение раз в день
+            last_message = user.get("last_coach_message", 0)
+            now = int(time.time())
 
+            if now - last_message >= 86400:  # 24 часа
+                await send_coach_message(bot, user_id, user)
+                user["last_coach_message"] = now
+                save_users()
+            
             if user.get("plan") == "pro":
                 continue
 
