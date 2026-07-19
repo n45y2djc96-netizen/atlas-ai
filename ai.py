@@ -246,7 +246,14 @@ def chat_ai(text, memory, user):
             "role": "system",
             "content": strategy
         })
-         
+        
+        brain = build_brain(user)
+
+        messages.append({
+            "role": "system",
+            "content": brain
+        })
+        
         # Новый вопрос
         messages.append({
             "role": "user",
