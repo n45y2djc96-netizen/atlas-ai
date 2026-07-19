@@ -39,7 +39,6 @@ from atlas_memory import analyze_user
 from atlas_observer import observe_user
 from atlas_core import build_strategy
 from atlas_brain import build_brain
-from atlas_coach import send_coach_message
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
