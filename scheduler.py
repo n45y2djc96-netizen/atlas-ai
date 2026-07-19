@@ -1,6 +1,7 @@
 import asyncio
 import json
 import time
+from atlas_coach import send_coach_message
 
 DATA_FILE = "users.json"
 
@@ -27,22 +28,26 @@ async def check_users(bot):
         now = int(time.time())
 
         for user_id, user in users.items():
-        
+
             # Отправляем инициативное сообщение раз в день
             last_message = user.get("last_coach_message", 0)
-            now = int(time.time())
 
             if now - last_message >= 86400:  # 24 часа
-                await send_coach_message(bot, user_id, user)
-                user["last_coach_message"] = now
-                save_users()
-            
+                try:
+                    await send_coach_message(bot, user_id, user)
+                    user["last_coach_message"] = now
+                    changed = True
+                except:
+                    pass
+
+            # Проверяем только бесплатных пользователей
             if user.get("plan") == "pro":
                 continue
 
             if user.get("reset_time", 0) == 0:
                 continue
 
+            # Сбрасываем лимит через 24 часа
             if now >= user["reset_time"]:
 
                 user["messages_today"] = 0
@@ -62,7 +67,9 @@ async def check_users(bot):
                 except:
                     pass
 
+        # Сохраняем изменения один раз после всех проверок
         if changed:
             save_users(users)
 
+        # Проверяем пользователей каждые 5 минут
         await asyncio.sleep(300)
