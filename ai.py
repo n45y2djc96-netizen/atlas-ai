@@ -240,7 +240,14 @@ def chat_ai(text, memory, user):
                 "content": memory_info
             })
        
-         # Новый вопрос
+         strategy = build_strategy(user, text)
+
+         messages.append({
+             "role": "system",
+             "content": strategy
+         })
+         
+        # Новый вопрос
         messages.append({
             "role": "user",
             "content": text
