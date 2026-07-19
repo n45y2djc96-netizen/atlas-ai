@@ -518,7 +518,10 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     try:
         answer = chat_ai(text, user["memory"], user)
-
+        
+        if focus_message:
+            answer += "\n\n" + focus_message
+        
         await update.message.reply_text(answer)
 
     except Exception as e:
