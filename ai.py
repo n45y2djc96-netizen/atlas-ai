@@ -233,7 +233,12 @@ def chat_ai(text, memory, user):
             memory_info += "\nСтрахи:\n"
             for i in user["fears"][-5:]:
                 memory_info += f"- {i}\n"
-
+       
+        if user.get("insights"):
+            memory_info += "\nВыводы ATLAS о пользователе:\n"
+            for i in user["insights"][-5:]:
+                memory_info += f"- {i}\n"
+        
         if memory_info:
             messages.append({
                 "role": "system",
