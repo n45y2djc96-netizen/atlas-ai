@@ -1,6 +1,7 @@
 import os
 from groq import Groq
 from atlas_core import build_strategy
+from atlas_brain import build_brain
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
