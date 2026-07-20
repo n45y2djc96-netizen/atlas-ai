@@ -39,6 +39,7 @@ from atlas_analysis import analyze_user
 from atlas_observer import observe_user
 from atlas_focus import check_focus
 from atlas_insight import generate_insights
+from atlas_promises import remember_promise
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
