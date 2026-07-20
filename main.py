@@ -42,6 +42,7 @@ from atlas_brain import build_brain
 from atlas_analysis import analyze_user
 from atlas_focus import check_focus
 from atlas_analyzer import analyze_user
+from atlas_insight import generate_insights
 
 TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
 DATA_FILE = "users.json"
