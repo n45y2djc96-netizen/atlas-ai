@@ -508,10 +508,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     update_memory(user, text)
     analyze_user(user, text)
     observe_user(user)
-    analyze_user(user, text)
-    focus_message = check_focus(user, text)
-    analyze_user(user, text)
     generate_insights(user)
+    focus_message = check_focus(user, text)
     
     add_message(user)
     save_users()
