@@ -30,12 +30,14 @@ async def send_coach_message(bot, user_id, user):
             f"📈 {name}, каждый день без действия отдаляет тебя от цели. Давай сегодня сделаем хотя бы один шаг."
         ]
 
-    # Иногда добавляем вопрос, чтобы человек больше рассказывал о себе
+    # Выбираем основное сообщение
+    message = random.choice(messages)
+
+    # Иногда добавляем вопрос доверия, а не заменяем сообщение
     if random.random() < 0.4:  # 40% сообщений
-        messages.append(get_trust_question(user))
-    
-    
+        message += "\n\n" + get_trust_question(user)
+
     await bot.send_message(
         chat_id=user_id,
-        text=random.choice(messages)
+        text=message
     )
