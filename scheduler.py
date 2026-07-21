@@ -29,7 +29,10 @@ async def check_users(bot):
         now = int(time.time())
 
         for user_id, user in users.items():
-
+           
+            # Проверяем невыполненные обещания
+            await check_promises(bot, users)
+            
             # Отправляем инициативное сообщение раз в день
             last_message = user.get("last_coach_message", 0)
 
