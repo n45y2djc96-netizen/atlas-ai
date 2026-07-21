@@ -516,6 +516,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     remember_promise(user, text)
     
+    remember_personality(user, text)
+    
     generate_insights(user)
 
     focus_message = check_focus(user, text)
