@@ -2,6 +2,7 @@ import asyncio
 import json
 import time
 from atlas_coach import send_coach_message
+from atlas_followup import check_promises
 
 DATA_FILE = "users.json"
 
