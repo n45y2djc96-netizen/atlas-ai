@@ -525,6 +525,11 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         answer = chat_ai(text, user["memory"], user)
         
+        heart_message = get_heart_message(user, text)
+
+        if heart_message:
+            answer = heart_message + "\n\n" + answer
+        
         if focus_message:
             answer += "\n\n" + focus_message
         
