@@ -38,6 +38,10 @@ async def send_coach_message(bot, user_id, user):
     if random.random() < 0.4:  # 40% сообщений
         message += "\n\n" + get_trust_question(user)
 
+    # Редко начинаем более глубокий разговор
+    if random.random() < 0.2:  # 20% сообщений
+        message += "\n\n" + get_soul_message(user)
+    
     await bot.send_message(
         chat_id=user_id,
         text=message
