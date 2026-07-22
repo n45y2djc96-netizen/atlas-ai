@@ -1,5 +1,6 @@
 import random
 from atlas_trust import get_trust_question
+from atlas_soul import get_soul_message
 
 async def send_coach_message(bot, user_id, user):
     name = user.get("name", "друг")
