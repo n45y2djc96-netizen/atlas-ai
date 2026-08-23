@@ -43,7 +43,10 @@ from atlas_promises import remember_promise
 from atlas_heart import get_heart_message
 from atlas_personality import remember_personality
 
-TOKEN = "8747579183:AAGlnU03s7XUeFNVe3jqAgPH-UB1GiHcDJU"
+TOKEN = os.getenv("BOT_TOKEN")
+
+if not TOKEN:
+    raise RuntimeError("BOT_TOKEN is not set")
 DATA_FILE = "users.json"
 
 # ---------- LOAD ----------
