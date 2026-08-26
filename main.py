@@ -42,6 +42,8 @@ from atlas_insight import generate_insights
 from atlas_promises import remember_promise
 from atlas_heart import get_heart_message
 from atlas_personality import remember_personality
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 TOKEN = os.getenv("BOT_TOKEN")
 
