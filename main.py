@@ -877,9 +877,37 @@ app.add_handler(
 
 print("🚀 ATLAS RUNNING")
 
+
 async def post_init(application):
     asyncio.create_task(check_users(application.bot))
 
+
 app.post_init = post_init
 
+
+# ---------- RENDER HEALTH SERVER ----------
+class HealthHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.end_headers()
+        self.wfile.write(b"ATLAS is alive")
+
+    def log_message(self, format, *args):
+        return
+
+
+def run_health_server():
+    port = int(os.environ.get("PORT", "10000"))
+    server = ThreadingHTTPServer(("0.0.0.0", port), HealthHandler)
+    server.serve_forever()
+
+
+threading.Thread(
+    target=run_health_server,
+    daemon=True
+).start()
+
+
+# ---------- START TELEGRAM BOT ----------
 app.run_polling()
