@@ -102,7 +102,7 @@ def chat_ai(text, memory, user):
         ]
 
         # Последние сообщения
-        for msg in memory[-10:]:
+        for msg in memory[-3:]:
             messages.append({
                 "role": "user",
                 "content": msg
@@ -285,7 +285,7 @@ def chat_ai(text, memory, user):
             model="openai/gpt-oss-120b",
             messages=messages,
             temperature=0.5,
-            max_tokens=2048
+            max_tokens=1024
         )
 
         return response.choices[0].message.content
