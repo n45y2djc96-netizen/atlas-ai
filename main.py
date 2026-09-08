@@ -42,8 +42,7 @@ from atlas_insight import generate_insights
 from atlas_promises import remember_promise
 from atlas_heart import get_heart_message
 from atlas_personality import remember_personality
-import threading
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
 
 TOKEN = os.getenv("BOT_TOKEN")
 
@@ -884,29 +883,6 @@ async def post_init(application):
 
 app.post_init = post_init
 
-
-# ---------- RENDER HEALTH SERVER ----------
-class HealthHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-Type", "text/plain; charset=utf-8")
-        self.end_headers()
-        self.wfile.write(b"ATLAS is alive")
-
-    def log_message(self, format, *args):
-        return
-
-
-def run_health_server():
-    port = int(os.environ.get("PORT", "10000"))
-    server = ThreadingHTTPServer(("0.0.0.0", port), HealthHandler)
-    server.serve_forever()
-
-
-threading.Thread(
-    target=run_health_server,
-    daemon=True
-).start()
 
 
 # ---------- START TELEGRAM BOT ----------
