@@ -278,7 +278,7 @@ def chat_ai(text, memory, user):
                 "role": "system",
                 "content":
                 "Наблюдения ATLAS о пользователе:\n\n"
-                + "\n".join(user["observations"])
+                + "\n".join(user["observations"][-5:])
             })
         
         response = client.chat.completions.create(
