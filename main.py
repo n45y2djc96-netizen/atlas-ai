@@ -520,6 +520,21 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     add_message(user)
     save_users()
     
+    ai_text = text
+
+    if internet_context:
+        ai_text = f"""
+    Вопрос пользователя:
+    {text}
+
+    Актуальная информация из интернета:
+    {internet_context}
+
+    Используй эту информацию для ответа.
+    Не упоминай внутреннюю техническую работу поиска.
+    Отвечай коротко и естественно.
+    """
+    
     try:
         answer = chat_ai(ai_text, user["memory"], user)
         
