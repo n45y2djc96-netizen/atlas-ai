@@ -12,23 +12,35 @@ def search_web(query):
                 "api_key": TAVILY_API_KEY,
                 "query": query,
                 "search_depth": "basic",
-                "max_results": 5
+                "max_results": 3
             },
-            timeout=30
+            timeout=20
         )
 
+        response.raise_for_status()
         data = response.json()
 
         if "results" not in data:
             return None
 
-        text = ""
+        parts = []
 
         for item in data["results"]:
-            text += f"{item['title']}\n"
-            text += f"{item['content']}\n\n"
+            title = item.get("title", "")
+            content = item.get("content", "")
 
-        return text
+            # Не даём одному результату раздувать запрос
+            content = content[:1200]
+
+            parts.append(
+                f"{title}\n{content}"
+            )
+
+        if not parts:
+            return None
+
+        # Общий лимит интернет-контекста
+        return "\n\n".join(parts)[:3500]
 
     except Exception:
         return None
