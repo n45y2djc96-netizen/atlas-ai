@@ -495,22 +495,13 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     user["facts"] = user["facts"][-50:]
     
-    internet = None
+    internet_context = ""
 
     if need_internet(text):
-        internet = search_web(text)
+        internet_context = search_web(text)
 
-    if internet:
-        text = f"""
-    Вопрос пользователя:
-    {text}
-
-    Свежая информация:
-
-    {internet}
-
-    Используй только эту информацию при ответе.
-    """
+    if internet_context:
+        internet_context = internet_context[:5000]
     
     update_memory(user, text)
 
@@ -530,7 +521,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     save_users()
     
     try:
-        answer = chat_ai(text, user["memory"], user)
+        answer = chat_ai(ai_text, user["memory"], user)
         
         heart_message = get_heart_message(user, text)
 
