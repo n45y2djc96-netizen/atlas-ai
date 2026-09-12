@@ -500,8 +500,8 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if need_internet(text):
         internet_context = search_web(text)
 
-    if internet_context:
-        internet_context = internet_context[:5000]
+        if internet_context:
+            internet_context = internet_context[:3000]
     
     update_memory(user, text)
 
