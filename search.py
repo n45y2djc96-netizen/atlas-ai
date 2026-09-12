@@ -18,6 +18,7 @@ def search_web(query):
         )
 
         response.raise_for_status()
+
         data = response.json()
 
         if "results" not in data:
@@ -27,20 +28,18 @@ def search_web(query):
 
         for item in data["results"]:
             title = item.get("title", "")
-            content = item.get("content", "")
+            content = item.get("content", "")[:1000]
 
-            # Не даём одному результату раздувать запрос
-            content = content[:1200]
-
-            parts.append(
-                f"{title}\n{content}"
-            )
+            if title or content:
+                parts.append(
+                    f"{title}\n{content}"
+                )
 
         if not parts:
             return None
 
-        # Общий лимит интернет-контекста
-        return "\n\n".join(parts)[:3500]
+        return "\n\n".join(parts)[:3000]
 
-    except Exception:
+    except Exception as e:
+        print("SEARCH ERROR:", e)
         return None
