@@ -37,10 +37,8 @@ from stars import buy_pro
 from memory import update_memory
 from atlas_analysis import analyze_user
 from atlas_observer import observe_user
-from atlas_focus import check_focus
 from atlas_insight import generate_insights
 from atlas_promises import remember_promise
-from atlas_heart import get_heart_message
 from atlas_personality import remember_personality
 
 
