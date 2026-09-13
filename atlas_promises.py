@@ -19,3 +19,4 @@ def remember_promise(user, text):
             user["promises"].append(text)
 
         user["promises"] = user["promises"][-30:]
+        
