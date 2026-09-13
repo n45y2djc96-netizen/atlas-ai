@@ -20,7 +20,6 @@ from motivation_texts import get_motivation
 from ai import chat_ai
 from search import search_web
 from internet import need_internet
-from memory import update_memory
 from pro_keyboard import pro_keyboard
 import time
 from datetime import timedelta
@@ -513,7 +512,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     generate_insights(user)
 
-    focus_message = check_focus(user, text)
+    
     
     add_message(user)
     save_users()
@@ -528,13 +527,6 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
              internet_context
         )
         
-        heart_message = get_heart_message(user, text)
-
-        if heart_message:
-            answer = heart_message + "\n\n" + answer
-        
-        if focus_message:
-            answer += "\n\n" + focus_message
         
         await update.message.reply_text(answer)
 
